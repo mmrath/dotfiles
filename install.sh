@@ -159,15 +159,6 @@ setup_shell() {
         chsh -s "$zsh_path"
         info "default shell changed to $zsh_path"
     fi
-    echo "installing oh-my-zsh"
-    rm -rf ~/.oh-my-zsh
-    
-    git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
-    mkdir -p  ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
     ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc
     ln -sf $DOTFILES/zsh/.zprofile $HOME/.zprofile
     ln -sf $DOTFILES/zsh/.zshenv $HOME/.zshenv
