@@ -221,6 +221,9 @@ setup_macos() {
         echo "Enable tap to click (Trackpad)"
         defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
+        # required for alacritty
+        defaults write -g AppleFontSmoothing -int 0
+
         echo "Enable Safari’s debug menu"
         defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
@@ -238,9 +241,8 @@ setup_nvim() {
     echo "existing nvim config detected, delete it first"
   else
     {
-      git clone https://github.com/NvChad/NvChad $HOME/.config/nvim --depth 1
-      ln -s $DOTFILES/nvim/NvChad-custom $HOME/.config/nvim/lua/custom
-      nvim +'hi NormalFloat guibg=#1e222a' +PackerSync
+      git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+      nvim +PackerSync
     }
   fi
 
