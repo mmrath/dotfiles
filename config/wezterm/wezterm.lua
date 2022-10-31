@@ -10,32 +10,32 @@ local function font(name, params)
 end
 
 return {
-	-- font
-	font = wezterm.font_with_fallback({
- 		"Iosevka Nerd Font",
-		"JetBrains Mono",
-		"nonicons",
-	}),
-	font_size = 14.0,
-	line_height = 1.1,
-  -- colorscheme
-  color_scheme = "GitHub Dark",
+   -- font
+   font = wezterm.font_with_fallback({
+      "Iosevka Nerd Font",
+      "JetBrains Mono",
+      "nonicons",
+   }),
+   font_size = 14.0,
+   line_height = 1.1,
+   -- colorscheme
+   color_scheme = "Google Light (base16)",
 
-  -- scroll bar
-  enable_scroll_bar = true,
+   -- scroll bar
+   enable_scroll_bar = true,
 
-  -- status
-  status_update_interval = 1000,
+   -- status
+   status_update_interval = 1000,
 
-	-- tabs/panes
-	hide_tab_bar_if_only_one_tab = false,
-  enable_tab_bar = true,
-  use_fancy_tab_bar = false,
-  tab_max_width = 25,
-  show_tab_index_in_tab_bar = false,
-  switch_to_last_active_tab_when_closing_tab = true,
+   -- tabs/panes
+   hide_tab_bar_if_only_one_tab = false,
+   enable_tab_bar = true,
+   use_fancy_tab_bar = true,
+   tab_max_width = 25,
+   show_tab_index_in_tab_bar = false,
+   switch_to_last_active_tab_when_closing_tab = true,
 
-  -- window
+   -- window
    window_padding = {
       left = 5,
       right = 10,
@@ -52,7 +52,7 @@ return {
       font_size = 9,
    },
 
-  -- mousebindings
+   -- mousebindings
    mouse_bindings = {
       -- Ctrl-click will open the link under the mouse cursor
       {
@@ -62,6 +62,6 @@ return {
       },
    },
 
-  -- others
-  force_reverse_video_cursor = true,
+   -- others
+   force_reverse_video_cursor = true,
 }
