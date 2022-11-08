@@ -1,27 +1,16 @@
 local wezterm = require("wezterm")
--- require("config.right-status").setup()
--- require("config.notify").setup()
--- require("config.tab-title").setup()
 
-local colors = wezterm.get_builtin_color_schemes()["dawnfox"]
-colors.tab_bar = {
-  background = colors.background
-}
 
-local font_name = "Iosevka Nerd Font"
-
-local function font(name, params)
-   return wezterm.font(name, params)
-end
 
 return {
+   color_scheme = 'Dracula',
    -- font
    font = wezterm.font_with_fallback({
+      "JetBrainsMono Nerd Font",
       "Iosevka Nerd Font",
-      "JetBrains Mono",
       "nonicons",
    }),
-   font_size = 14.0,
+   font_size = 13.0,
    line_height = 1.1,
 
    -- scroll bar
@@ -51,10 +40,6 @@ return {
    inactive_pane_hsb = { saturation = 1.0, brightness = 1.0 },
    window_background_opacity = 1.0,
    window_close_confirmation = "NeverPrompt",
-   window_frame = {
-      font = font(font_name, { bold = true }),
-      font_size = 13,
-   },
 
    -- mousebindings
    mouse_bindings = {
@@ -67,6 +52,5 @@ return {
    },
 
    -- others
-   force_reverse_video_cursor = true,
-   colors = colors,
+   force_reverse_video_cursor = true
 }
