@@ -14,6 +14,8 @@ if OS.mac?
     cask "font-jetbrains-mono"
     cask "font-cascadia-mono"
     cask "font-iosevka-nerd-font"
+    cask "font-jetbrains-mono-nerd-font"
+    
 elsif OS.linux?
     brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
 end
