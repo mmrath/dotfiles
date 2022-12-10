@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 # vim: set filetype=zsh
 
+
 # Add more dirs to PATH
 if [[ ! "${PATH}" == *:.* ]]; then
     export PATH="${PATH}:."
@@ -23,9 +24,6 @@ fi
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
-
-# Set the system-wide editor
-export EDITOR=nvim
 
 # Set XDG_CONFIG_HOME
 export XDG_CONFIG_HOME="${HOME}/.config"

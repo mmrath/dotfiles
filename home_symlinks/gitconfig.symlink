@@ -174,7 +174,7 @@
     extendRegexp = true
     lineNumber = true
 [credential]
-    helper = osxkeychain
+	helper = cache --timeout 3600
 [rebase]
     instructionFormat = "[%an - %ar] %s"
     autoStash = true
