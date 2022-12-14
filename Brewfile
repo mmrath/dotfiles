@@ -5,7 +5,6 @@ if OS.mac?
 
     brew "noti" # utility to display notifications from scripts
     brew "trash" # rm, but put in the trash rather than completely delete
-    brew "zsh"
 
     # Applications
     cask "kitty" # a better terminal emulator
@@ -51,3 +50,6 @@ brew "vim" # Vim (latest)
 brew "wdiff" # word differences in text files
 brew "wget" # internet file retriever
 brew "z" # switch between most used directories
+brew "zsh" # install zsh from brew 
+brew "asdf" # install  asdf
+brew "direnv" # install  direnv

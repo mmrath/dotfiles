@@ -168,6 +168,11 @@ setup_shell() {
     fi
 }
 
+install_asdf() {
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
+
+}
+
 function setup_terminfo() {
     title "Configuring terminfo"
 
