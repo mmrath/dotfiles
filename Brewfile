@@ -52,4 +52,3 @@ brew "wget" # internet file retriever
 brew "z" # switch between most used directories
 brew "zsh" # install zsh from brew 
 brew "asdf" # install  asdf
-brew "direnv" # install  direnv

@@ -62,6 +62,22 @@ backup() {
     done
 }
 
+setup_fonts(){
+    title "Installing fonts"
+
+    if [[ "$(uname)" == "Linux" ]]; then
+        mkdir -p $HOME/.fonts/my_fonts
+        # ubuntu recursively looks in $HOME/.fonts
+        rsync -av --progress --delete $DOTFILES/fonts/ $HOME/.fonts/my_fonts
+        fc-cache -r -v
+    fi
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        mkdir -p $HOME/Library/Fonts/MyFonts
+        rsync -av --progress --delete $DOTFILES/fonts/ $HOME/Library/Fonts/MyFonts
+    fi
+}
+
 
 setup_symlinks() {
     title "Creating symlinks"
@@ -147,12 +163,6 @@ setup_homebrew() {
     "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-bash --no-fish
 }
 
-fetch_catppuccin_theme() {
-    for palette in frappe latte macchiato mocha; do
-        curl -o "$DOTFILES/config/kitty/themes/catppuccin-$palette.conf" "https://raw.githubusercontent.com/catppuccin/kitty/main/$palette.conf"
-    done
-}
-
 setup_shell() {
     title "Configuring shell"
 
@@ -166,11 +176,6 @@ setup_shell() {
         chsh -s "$zsh_path"
         info "default shell changed to $zsh_path"
     fi
-}
-
-install_asdf() {
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
-
 }
 
 function setup_terminfo() {
@@ -262,8 +267,8 @@ case "$1" in
     macos)
         setup_macos
         ;;
-    catppuccin)
-        fetch_catppuccin_theme
+    fonts)
+        setup_fonts
         ;;
     all)
         setup_symlinks
@@ -272,6 +277,7 @@ case "$1" in
         setup_shell
         setup_git
         setup_macos
+        setup_fonts
         ;;
     *)
         echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"
