@@ -9,6 +9,10 @@ if OS.mac?
     # Applications
     cask "kitty" # a better terminal emulator
 
+    brew "zsh" # install zsh from brew 
+    brew "git" # Git version control (latest version)
+
+
     # Fonts
     cask "font-fira-code"
     cask "font-jetbrains-mono"
@@ -32,7 +36,6 @@ brew "exa" # file watcher / command runner
 brew "fd" # find alternative
 brew "fzf" # Fuzzy file searcher, used in scripts and in vim
 brew "gh" # GitHub CLI
-brew "git" # Git version control (latest version)
 brew "gnupg" # GPG
 brew "grep" # grep (latest)
 brew "highlight" # code syntax highlighting
@@ -46,9 +49,7 @@ brew "fnm" # Fast Node version manager
 brew "shellcheck" # diagnostics for shell sripts
 brew "tmux" # terminal multiplexer
 brew "tree" # pretty-print directory contents
-brew "vim" # Vim (latest)
 brew "wdiff" # word differences in text files
 brew "wget" # internet file retriever
 brew "z" # switch between most used directories
-brew "zsh" # install zsh from brew 
-brew "asdf" # install  asdf
+
