@@ -12,3 +12,5 @@ vim/vim.symlink/plugged/
 
 Brewfile.lock.json
 .DS_Store
+.zcompdump
+
