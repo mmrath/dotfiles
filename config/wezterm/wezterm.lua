@@ -1,6 +1,30 @@
 local wezterm = require("wezterm")
 
+local function get_title(tab, tabs, panes, config, hover, max_width)
+    local title = " " .. (tab.tab_index + 1) .. ": " .. tab.active_pane.title .. " "
+    if #title <= max_width then
+        return title
+    end
+    local ellipsis = "..."
+    return wezterm.truncate_right(title, max_width - (2 + #ellipsis)) .. ellipsis
+end
 
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+    local title = get_title(tab, tabs, panes, config, hover, max_width)
+
+    if tab.is_active then
+        return {
+            { Attribute = { Intensity = "Bold" } },
+            { Text = title },
+            { Background = { Color = "#000000" } },
+            { Text = " " },
+        }
+    end
+    return {
+        { Text = title },
+        { Text = " " },
+    }
+end)
 
 return {
    color_scheme = 'Dracula',
@@ -10,7 +34,7 @@ return {
       "Iosevka Nerd Font",
       "nonicons",
    }),
-   font_size = 13.0,
+   font_size = 10.0,
    line_height = 1.1,
    default_cursor_style = 'BlinkingBar',
 
