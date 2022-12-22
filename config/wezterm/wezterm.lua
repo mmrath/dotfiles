@@ -12,6 +12,7 @@ return {
    }),
    font_size = 13.0,
    line_height = 1.1,
+   default_cursor_style = 'BlinkingBar',
 
    -- scroll bar
    enable_scroll_bar = true,
