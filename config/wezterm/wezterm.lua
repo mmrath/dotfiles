@@ -34,7 +34,7 @@ return {
       "Iosevka Nerd Font",
       "nonicons",
    }),
-   font_size = 10.0,
+   font_size = 13.0,
    line_height = 1.1,
    default_cursor_style = 'BlinkingBar',
 

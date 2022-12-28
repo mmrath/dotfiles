@@ -187,6 +187,39 @@ setup_shell() {
     fi 
 }
 
+setup_oh_my_zsh(){
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        info "clonging oh-my-zsh"
+        git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+    else
+        info "oh-my-zsh already exists"
+    fi
+
+    if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+        info "cloning powerlevel10k"
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    else
+        info "powerlevel10k already exists"
+    fi
+
+    if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
+        info "install zsh-syntax-highlighting"
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    fi
+    if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
+        info "install zsh-autosuggestions"
+        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    fi
+    if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-completions ]; then
+        info "install zsh-completions"
+        git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+    fi
+
+    ln -sf $DOTFILES/home_symlinks/zshenv.symlink $HOME/.zshenv
+    ln -sf $DOTFILES/home_symlinks/zshrc.symlink $HOME/.zshrc
+    ln -sf $DOTFILES/home_symlinks/p10k.zsh.symlink $HOME/.p10k.sh
+}
+
 function setup_terminfo() {
     title "Configuring terminfo"
 
@@ -269,6 +302,10 @@ case "$1" in
         ;;
     shell)
         setup_shell
+        setup_oh_my_zsh
+        ;;
+    oh-my-zsh)
+        setup_oh_my_zsh
         ;;
     terminfo)
         setup_terminfo

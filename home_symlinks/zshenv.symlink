@@ -1,2 +1,48 @@
-ZDOTDIR=$HOME/.config/zsh
-. $ZDOTDIR/.zshenv
+#!/usr/bin/env zsh
+# vim: set filetype=zsh
+
+# Add more dirs to PATH
+if [[ ! "${PATH}" == *:.* ]]; then
+    export PATH="${PATH}:."
+fi
+for dir in bin .bin; do
+    if [[ ! "${PATH}" == *${HOME}/${dir}* ]]; then
+        export PATH="${HOME}/${dir}:${PATH}"
+    fi
+done
+
+# Golang
+export GOPATH="${HOME}/go"
+if [[ ! "${PATH}" == */usr/local/go/bin* ]]; then
+    export PATH="${PATH}:/usr/local/go/bin"
+fi
+
+if [[ ! "${PATH}" == *${GOPATH}/bin* ]]; then
+    export PATH="${PATH}:${GOPATH}/bin"
+fi
+
+# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+export KEYTIMEOUT=1
+
+# Set XDG_CONFIG_HOME
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+# Set the GPG_TTY to the current TTY
+export GPG_TTY=${TTY}
+
+# Rust
+test -f "${HOME}/.cargo/env" && source "${HOME}/.cargo/env"
+
+export CACHEDIR="$HOME/.local/share"
+export VIM_TMP="$HOME/.vim-tmp"
+
+[[ -d "$CACHEDIR" ]] || mkdir -p "$CACHEDIR"
+[[ -d "$VIM_TMP" ]] || mkdir -p "$VIM_TMP"
+
+
+typeset -aU path
+
+export EDITOR='nvim'
+export GIT_EDITOR='nvim'
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
