@@ -1,38 +1,37 @@
 if OS.mac?
     # taps
-    tap "homebrew/cask"
     tap "homebrew/cask-fonts"
+    tap "jandedobbeleer/oh-my-posh"
 
     brew "noti" # utility to display notifications from scripts
     brew "trash" # rm, but put in the trash rather than completely delete
+    brew "oh-my-posh" # prompt theme engine
 
     # Applications
     cask "kitty" # a better terminal emulator
 
-    brew "zsh" # install zsh from brew 
+    brew "zsh" # install zsh from brew
     brew "git" # Git version control (latest version)
 
 
-    # Fonts
-    cask "font-fira-code"
-    cask "font-jetbrains-mono"
-    cask "font-cascadia-mono"
-    cask "font-iosevka-nerd-font"
+    # Fonts (Nerd Font versions include powerline glyphs)
     cask "font-jetbrains-mono-nerd-font"
+    cask "font-caskaydia-mono-nerd-font"
+    cask "font-iosevka-nerd-font"
+    cask "font-fira-code-nerd-font"
+    cask "font-maple-mono-nf"
     
 elsif OS.linux?
     brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
 end
 
-tap "homebrew/bundle"
-tap "homebrew/core"
 
 # packages
 brew "bat" # better cat
 brew "cloc" # lines of code counter
 brew "git-delta" # a better git diff
 brew "entr" # file watcher / command runner
-brew "exa" # file watcher / command runner
+brew "eza" # modern ls replacement (formerly exa)
 brew "fd" # find alternative
 brew "fzf" # Fuzzy file searcher, used in scripts and in vim
 brew "gh" # GitHub CLI

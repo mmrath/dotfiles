@@ -65,16 +65,31 @@ backup() {
 setup_fonts(){
     title "Installing fonts"
 
-    if [[ "$(uname)" == "Linux" ]]; then
-        mkdir -p $HOME/.fonts/my_fonts
-        # ubuntu recursively looks in $HOME/.fonts
-        rsync -av --progress --delete $DOTFILES/fonts/ $HOME/.fonts/my_fonts
-        fc-cache -r -v
-    fi
-
     if [[ "$(uname)" == "Darwin" ]]; then
-        mkdir -p $HOME/Library/Fonts/MyFonts
-        rsync -av --progress --delete $DOTFILES/fonts/ $HOME/Library/Fonts/MyFonts
+        # macOS: Install via Homebrew casks (defined in Brewfile)
+        info "Installing fonts via Homebrew..."
+        brew install --cask font-jetbrains-mono-nerd-font
+        brew install --cask font-caskaydia-mono-nerd-font
+        brew install --cask font-iosevka-nerd-font
+        brew install --cask font-fira-code-nerd-font
+        brew install --cask font-maple-mono-nf
+        success "Fonts installed via Homebrew"
+    elif [[ "$(uname)" == "Linux" ]]; then
+        # Linux: Download from Nerd Fonts releases
+        local fonts=("JetBrainsMono" "CascadiaCode" "Iosevka" "FiraCode")
+        local version="v3.3.0"
+        local base_url="https://github.com/ryanoasis/nerd-fonts/releases/download/${version}"
+        local font_dir="$HOME/.local/share/fonts/NerdFonts"
+
+        mkdir -p "$font_dir"
+        for font in "${fonts[@]}"; do
+            info "Downloading $font..."
+            curl -fLo "/tmp/${font}.zip" "${base_url}/${font}.zip"
+            unzip -o "/tmp/${font}.zip" -d "$font_dir" -x "*.md" -x "*.txt" -x "LICENSE"
+            rm "/tmp/${font}.zip"
+        done
+        fc-cache -f -v
+        success "Fonts installed to $font_dir"
     fi
 }
 
@@ -150,7 +165,10 @@ setup_homebrew() {
     if [ "$(uname)" == "Linux" ]; then
         test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
         test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+        # Only add to bash_profile if not already present
+        if test -r ~/.bash_profile && ! grep -q "linuxbrew" ~/.bash_profile; then
+            echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+        fi
     fi
 
     # install brew dependencies from Brewfile
@@ -175,7 +193,7 @@ setup_shell() {
 
     if [[ "$(uname)" == "Darwin" ]]; then
         [[ -n "$(command -v brew)" ]] && zsh_path="$(brew --prefix)/bin/zsh" || zsh_path="$(which zsh)"
-        if ! grep "$zsh_path" /etc/shells; then
+        if ! grep -qxF "$zsh_path" /etc/shells; then
             info "adding $zsh_path to /etc/shells"
             echo "$zsh_path" | sudo tee -a /etc/shells
         fi
@@ -187,37 +205,29 @@ setup_shell() {
     fi 
 }
 
-setup_oh_my_zsh(){
-    if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        info "clonging oh-my-zsh"
-        git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+setup_zsh_config(){
+    title "Setting up Zsh configuration"
+
+    # Install oh-my-posh if not present
+    if ! command -v oh-my-posh &> /dev/null; then
+        info "Installing oh-my-posh..."
+        if [[ "$(uname)" == "Darwin" ]]; then
+            brew install jandedobbeleer/oh-my-posh/oh-my-posh
+        else
+            curl -s https://ohmyposh.dev/install.sh | bash -s
+        fi
     else
-        info "oh-my-zsh already exists"
+        info "oh-my-posh already installed"
     fi
 
-    if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
-        info "cloning powerlevel10k"
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    else
-        info "powerlevel10k already exists"
-    fi
+    # Create zsh config directory
+    mkdir -p "$HOME/.config/zsh"
 
-    if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
-        info "install zsh-syntax-highlighting"
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    fi
-    if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
-        info "install zsh-autosuggestions"
-        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    fi
-    if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-completions ]; then
-        info "install zsh-completions"
-        git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
-    fi
+    # Symlinks are handled by setup_symlinks(), but ensure zshenv/zshrc are linked
+    ln -sf "$DOTFILES/home_symlinks/zshenv.symlink" "$HOME/.zshenv"
+    ln -sf "$DOTFILES/home_symlinks/zshrc.symlink" "$HOME/.zshrc"
 
-    ln -sf $DOTFILES/home_symlinks/zshenv.symlink $HOME/.zshenv
-    ln -sf $DOTFILES/home_symlinks/zshrc.symlink $HOME/.zshrc
-    ln -sf $DOTFILES/home_symlinks/p10k.zsh.symlink $HOME/.p10k.sh
+    success "Zsh configured with oh-my-posh + antidote.lite"
 }
 
 function setup_terminfo() {
@@ -276,12 +286,11 @@ setup_macos() {
         echo "Enable tap to click (Trackpad)"
         defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
-        echo "Enable Safari’s debug menu"
+        echo "Enable Safari's debug menu"
         defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
-        echo "Kill affected applications"
-
-        for app in Safari Finder Dock Mail SystemUIServer; do killall "$app" >/dev/null 2>&1; done
+        echo -e
+        info "Settings applied. Restart affected apps or log out/in for changes to take effect."
     else
         warning "macOS not detected. Skipping."
     fi
@@ -302,10 +311,7 @@ case "$1" in
         ;;
     shell)
         setup_shell
-        setup_oh_my_zsh
-        ;;
-    oh-my-zsh)
-        setup_oh_my_zsh
+        setup_zsh_config
         ;;
     terminfo)
         setup_terminfo
@@ -321,6 +327,7 @@ case "$1" in
         setup_terminfo
         setup_homebrew
         setup_shell
+        setup_zsh_config
         setup_git
         setup_macos
         setup_fonts

@@ -14,3 +14,13 @@ Brewfile.lock.json
 .DS_Store
 .zcompdump
 
+# Backup files
+*.bak
+*~
+
+# Theme files (user-specific)
+config/kitty/current-theme.conf
+
+# Fonts (downloaded during install)
+fonts/
+

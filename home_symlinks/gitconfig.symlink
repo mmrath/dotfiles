@@ -148,6 +148,7 @@
     pager = delta
     editor = vim
     whitespace = cr-at-eol
+	autocrlf = input
 [delta]
     features = unobtrusive-line-numbers decorations
     whitespace-error-style = 22 reverse
@@ -174,7 +175,15 @@
     extendRegexp = true
     lineNumber = true
 [credential]
-	helper = cache --timeout 3600
+	helper = osxkeychain
 [rebase]
     instructionFormat = "[%an - %ar] %s"
     autoStash = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Murali
+	email = murali@mmrath.com
