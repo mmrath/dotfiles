@@ -1,9 +1,8 @@
 # Dotfiles Makefile
 # Usage: make [target]
-#   make all       - Stow all packages
-#   make core      - Stow core packages (zsh, git, bin, mise)
-#   make terminals - Stow terminal configs
-#   make editors   - Stow editor configs
+#   make install   - Install all dependencies via Homebrew
+#   make all       - Install deps + stow all packages
+#   make stow      - Stow all packages (no install)
 #   make unstow    - Remove all symlinks
 
 DOTFILES := $(shell pwd)
@@ -21,19 +20,45 @@ EDITOR_PACKAGES := nvim jetbrains
 TOOL_PACKAGES := ripgrep
 ALL_PACKAGES := $(CORE_PACKAGES) $(TERMINAL_PACKAGES) $(EDITOR_PACKAGES) $(TOOL_PACKAGES)
 
-.PHONY: all core terminals editors tools help
+.PHONY: all install stow core terminals editors tools help
 .PHONY: $(ALL_PACKAGES)
-.PHONY: unstow clean bootstrap ensure-stow
+.PHONY: unstow clean bootstrap ensure-brew ensure-stow update
+
+# Ensure Homebrew is installed
+ensure-brew:
+	@command -v brew >/dev/null 2>&1 || { \
+		echo "Installing Homebrew..."; \
+		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+	}
 
 # Ensure stow is installed
-ensure-stow:
+ensure-stow: ensure-brew
 	@command -v stow >/dev/null 2>&1 || { \
 		echo "Installing stow..."; \
 		brew install stow; \
 	}
 
-# Default target
-all: ensure-stow core terminals editors tools
+# Install all dependencies from Brewfile
+install: ensure-brew
+	@echo "Installing dependencies from Brewfile..."
+	@brew bundle --file="$(DOTFILES)/Brewfile"
+	@echo "Dependencies installed!"
+
+# Update all dependencies
+update: ensure-brew
+	@echo "Updating dependencies..."
+	@brew update
+	@brew bundle --file="$(DOTFILES)/Brewfile"
+	@brew upgrade
+	@brew cleanup
+	@echo "Dependencies updated!"
+
+# Default target: install deps then stow
+all: install stow
+	@echo "All done! Dependencies installed and configs stowed."
+
+# Stow all packages (without installing deps)
+stow: ensure-stow core terminals editors tools
 	@echo "All packages stowed successfully!"
 
 # Package groups
@@ -106,7 +131,7 @@ force:
 	done
 	@echo "Done. Check 'git status' - adopted files may differ from repo versions."
 
-# Bootstrap: install dependencies and stow
+# Bootstrap: full setup for new machine
 bootstrap:
 	@./scripts/bootstrap.sh
 	@$(MAKE) all
@@ -125,8 +150,14 @@ help:
 	@echo ""
 	@echo "Usage: make [target]"
 	@echo ""
+	@echo "Main Targets:"
+	@echo "  all        - Install dependencies + stow all (recommended)"
+	@echo "  install    - Install/update dependencies from Brewfile"
+	@echo "  stow       - Stow all packages (no install)"
+	@echo "  update     - Update all Homebrew dependencies"
+	@echo "  unstow     - Remove all symlinks"
+	@echo ""
 	@echo "Package Groups:"
-	@echo "  all        - Stow all packages"
 	@echo "  core       - Stow core: zsh, git, bin, mise"
 	@echo "  terminals  - Stow terminals: wezterm, ghostty, zellij"
 	@echo "  editors    - Stow editors: nvim, jetbrains"
@@ -136,9 +167,8 @@ help:
 	@echo "  zsh, git, bin, mise, wezterm, ghostty,"
 	@echo "  zellij, nvim, jetbrains, ripgrep"
 	@echo ""
-	@echo "Other:"
-	@echo "  unstow     - Remove all symlinks"
-	@echo "  bootstrap  - Install deps and stow all"
+	@echo "Setup:"
+	@echo "  bootstrap  - Full setup for new machine"
 	@echo "  macos      - Apply macOS defaults"
 	@echo "  fonts      - Install fonts"
 	@echo "  help       - Show this help"

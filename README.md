@@ -15,8 +15,7 @@ macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 ```bash
 git clone https://github.com/murali/dotfiles ~/dotfiles
 cd ~/dotfiles
-make bootstrap
-make all
+make all          # Install deps + stow configs
 ```
 
 ## Installation
@@ -24,13 +23,24 @@ make all
 ### Prerequisites
 
 - macOS 12+
-- [Homebrew](https://brew.sh)
 
-### Bootstrap (Fresh Install)
+### Fresh Install
 
 ```bash
-make bootstrap    # Install Homebrew, dependencies, fonts
-make all          # Symlink all configurations
+make all          # Install dependencies + stow all configs
+```
+
+Or step by step:
+```bash
+make install      # Install dependencies from Brewfile
+make stow         # Symlink all configurations
+```
+
+### Updating
+
+```bash
+make update       # Update all Homebrew dependencies
+make stow         # Re-stow configs (if needed)
 ```
 
 ### Individual Packages
@@ -42,6 +52,12 @@ make ghostty      # Ghostty terminal
 make zellij       # Zellij multiplexer
 make nvim         # Neovim editor
 make git          # Git configuration
+```
+
+### All Make Targets
+
+```bash
+make help         # Show all available targets
 ```
 
 ## Theme Toggle
@@ -140,12 +156,12 @@ Key bindings (Leader = Space):
 | `<leader>ca` | Code action |
 | `<leader>w` | Save file |
 
-## Updating
+## Syncing Changes
 
 ```bash
 cd ~/dotfiles
 git pull
-make all
+make all          # Install any new deps + re-stow
 ```
 
 ## Uninstalling
