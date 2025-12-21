@@ -39,10 +39,10 @@ return {
 
     -- Font
     font = wezterm.font_with_fallback({
+        "Maple Mono NF",
         "JetBrainsMono Nerd Font",
-        "Iosevka Nerd Font",
     }),
-    font_size = 13.0,
+    font_size = 15.0,
     line_height = 1.1,
 
     -- Cursor
