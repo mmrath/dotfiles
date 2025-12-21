@@ -1,8 +1,8 @@
 // Zellij configuration
 // https://zellij.dev/documentation/
 
-// Theme (default: GitHub Light)
-theme "github-light"
+// Use built-in light theme
+theme "catppuccin-latte"
 
 // Scroll buffer
 scroll_buffer_size 50000
