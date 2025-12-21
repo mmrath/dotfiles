@@ -11,7 +11,7 @@
         {
           "type": "path",
           "style": "plain",
-          "foreground": "#89b4fa",
+          "foreground": "#8caaee",
           "template": "{{ .Path }}",
           "properties": {
             "style": "short"
@@ -20,12 +20,12 @@
         {
           "type": "git",
           "style": "plain",
-          "foreground": "#89b4fa",
+          "foreground": "#8caaee",
           "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#f9e2af{{ end }}",
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#fab387{{ end }}",
-            "{{ if gt .Ahead 0 }}#89b4fa{{ end }}",
-            "{{ if gt .Behind 0 }}#fab387{{ end }}"
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#e5c890{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ef9f76{{ end }}",
+            "{{ if gt .Ahead 0 }}#8caaee{{ end }}",
+            "{{ if gt .Behind 0 }}#ef9f76{{ end }}"
           ],
           "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} *{{ end }}{{ if .Staging.Changed }} +{{ end }}",
           "properties": {
@@ -43,7 +43,7 @@
         {
           "type": "executiontime",
           "style": "plain",
-          "foreground": "#6c7086",
+          "foreground": "#838ba7",
           "template": "{{ .FormattedMs }}",
           "properties": {
             "threshold": 500,
@@ -60,11 +60,11 @@
         {
           "type": "text",
           "style": "plain",
-          "foreground": "#cdd6f4",
+          "foreground": "#c6d0f5",
           "foreground_templates": [
-            "{{ if gt .Code 0 }}#f38ba8{{ end }}"
+            "{{ if gt .Code 0 }}#e78284{{ end }}"
           ],
-          "template": "{{ if gt .Code 0 }}\u2717{{ else }}\u276f{{ end }} "
+          "template": "{{ if gt .Code 0 }}✗{{ else }}❯{{ end }} "
         }
       ]
     }

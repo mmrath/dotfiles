@@ -20,15 +20,15 @@ end
 -- Color schemes
 local schemes = {
     dark = {
-        -- Catppuccin Mocha
-        background = "#1e1e2e",
-        foreground = "#cdd6f4",
-        cursor_bg = "#f5e0dc",
-        cursor_fg = "#1e1e2e",
-        selection_bg = "#45475a",
-        selection_fg = "#cdd6f4",
-        ansi = { "#45475a", "#f38ba8", "#a6e3a1", "#f9e2af", "#89b4fa", "#f5c2e7", "#94e2d5", "#bac2de" },
-        brights = { "#585b70", "#f38ba8", "#a6e3a1", "#f9e2af", "#89b4fa", "#f5c2e7", "#94e2d5", "#a6adc8" },
+        -- Catppuccin Frappe
+        background = "#303446",
+        foreground = "#c6d0f5",
+        cursor_bg = "#f2d5cf",
+        cursor_fg = "#303446",
+        selection_bg = "#626880",
+        selection_fg = "#c6d0f5",
+        ansi = { "#51576d", "#e78284", "#a6d189", "#e5c890", "#8caaee", "#ca9ee6", "#81c8be", "#b5bfe2" },
+        brights = { "#626880", "#e78284", "#a6d189", "#e5c890", "#8caaee", "#ca9ee6", "#81c8be", "#a5adce" },
     },
     light = {
         -- Catppuccin Latte

@@ -14,8 +14,8 @@ confirm-close-surface = false
 # Shell integration
 shell-integration = zsh
 
-# Theme (toggled by theme-toggle script, default: light)
-theme = catppuccin-latte
+# Theme (toggled by theme-toggle script, default: frappe)
+theme = catppuccin-frappe
 
 # Cursor
 cursor-style = bar

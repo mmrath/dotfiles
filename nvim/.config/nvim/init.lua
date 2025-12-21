@@ -162,7 +162,7 @@ require('lazy').setup({
         flavour = 'auto',
         background = {
           light = 'latte',
-          dark = 'mocha',
+          dark = 'frappe',
         },
         transparent_background = false,
         term_colors = true,

@@ -27,7 +27,7 @@ set_theme() {
     local ghostty_config="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config"
     if [[ -f "$ghostty_config" ]]; then
         if [[ "$theme" == "dark" ]]; then
-            sed -i '' 's/^theme = .*/theme = catppuccin-mocha/' "$ghostty_config"
+            sed -i '' 's/^theme = .*/theme = catppuccin-frappe/' "$ghostty_config"
         else
             sed -i '' 's/^theme = .*/theme = catppuccin-latte/' "$ghostty_config"
         fi
