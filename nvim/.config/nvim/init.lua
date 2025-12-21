@@ -152,14 +152,18 @@ require('lazy').setup({
     end,
   },
 
-  -- Catppuccin theme (for dark mode)
+  -- Catppuccin theme (supports both light and dark)
   {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
     config = function()
       require('catppuccin').setup {
-        flavour = 'mocha',
+        flavour = 'auto',
+        background = {
+          light = 'latte',
+          dark = 'mocha',
+        },
         transparent_background = false,
         term_colors = true,
       }
@@ -310,7 +314,8 @@ end
 
 vim.g.theme_mode = get_theme()
 if vim.g.theme_mode == 'dark' then
-  vim.cmd.colorscheme 'catppuccin'
+  vim.opt.background = 'dark'
 else
-  vim.cmd.colorscheme 'github_light'
+  vim.opt.background = 'light'
 end
+vim.cmd.colorscheme 'catppuccin'

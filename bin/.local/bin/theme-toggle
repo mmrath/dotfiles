@@ -29,21 +29,22 @@ set_theme() {
         if [[ "$theme" == "dark" ]]; then
             sed -i '' 's/^theme = .*/theme = catppuccin-mocha/' "$ghostty_config"
         else
-            sed -i '' 's/^theme = .*/theme = github-light/' "$ghostty_config"
+            sed -i '' 's/^theme = .*/theme = catppuccin-latte/' "$ghostty_config"
         fi
     fi
 
     # Signal running Neovim instances (if nvr is available)
     if command -v nvr &>/dev/null; then
-        local colorscheme
+        local bg
         if [[ "$theme" == "dark" ]]; then
-            colorscheme="catppuccin"
+            bg="dark"
         else
-            colorscheme="github_light"
+            bg="light"
         fi
-        for sock in /tmp/nvim*/0 2>/dev/null; do
+        for sock in /tmp/nvim*/0; do
+            [[ -e "$sock" ]] || continue
             nvr --nostart --servername "$sock" \
-                -c "lua vim.g.theme_mode = '$theme'; pcall(vim.cmd, 'colorscheme $colorscheme')" 2>/dev/null || true
+                -c "set background=$bg" 2>/dev/null || true
         done
     fi
 

@@ -31,15 +31,15 @@ local schemes = {
         brights = { "#585b70", "#f38ba8", "#a6e3a1", "#f9e2af", "#89b4fa", "#f5c2e7", "#94e2d5", "#a6adc8" },
     },
     light = {
-        -- GitHub Light (colorblind-friendly: red→orange, green→blue)
-        background = "#f5f5f0",
-        foreground = "#24292f",
-        cursor_bg = "#24292f",
-        cursor_fg = "#f5f5f0",
-        selection_bg = "#c8e1ff",
-        selection_fg = "#24292f",
-        ansi = { "#24292f", "#dc6d09", "#0969da", "#b45309", "#0969da", "#8250df", "#1b7c83", "#6e7781" },
-        brights = { "#57606a", "#c45d10", "#0550ae", "#9a5000", "#0550ae", "#6639ba", "#136061", "#8c959f" },
+        -- Catppuccin Latte
+        background = "#eff1f5",
+        foreground = "#4c4f69",
+        cursor_bg = "#dc8a78",
+        cursor_fg = "#eff1f5",
+        selection_bg = "#acb0be",
+        selection_fg = "#4c4f69",
+        ansi = { "#5c5f77", "#d20f39", "#40a02b", "#df8e1d", "#1e66f5", "#8839ef", "#179299", "#acb0be" },
+        brights = { "#6c6f85", "#d20f39", "#40a02b", "#df8e1d", "#1e66f5", "#8839ef", "#179299", "#bcc0cc" },
     },
 }
 
