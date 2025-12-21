@@ -152,7 +152,7 @@ require('lazy').setup({
     end,
   },
 
-  -- Soft light color scheme (easier on eyes)
+  -- Soft light color scheme (colorblind-friendly: red→orange, green→blue)
   {
     'projekt0n/github-nvim-theme',
     priority = 1000,
@@ -163,10 +163,25 @@ require('lazy').setup({
         },
         groups = {
           github_light = {
+            -- Soft background
             Normal = { bg = '#f5f5f0' },
             NormalFloat = { bg = '#ebebeb' },
             SignColumn = { bg = '#f5f5f0' },
             LineNr = { bg = '#f5f5f0' },
+            -- Colorblind-friendly diagnostics
+            DiagnosticError = { fg = '#dc6d09' },
+            DiagnosticWarn = { fg = '#b45309' },
+            DiagnosticInfo = { fg = '#0969da' },
+            DiagnosticHint = { fg = '#8250df' },
+            -- Git signs (additions blue, deletions orange)
+            GitSignsAdd = { fg = '#0969da' },
+            GitSignsChange = { fg = '#b45309' },
+            GitSignsDelete = { fg = '#dc6d09' },
+            -- Diff colors
+            DiffAdd = { bg = '#ddf4ff' },
+            DiffDelete = { bg = '#fce4c4' },
+            DiffChange = { bg = '#fef9c3' },
+            DiffText = { bg = '#f8c896' },
           },
         },
       }

@@ -32,8 +32,9 @@ return {
         cursor_fg = "#f5f5f0",
         selection_bg = "#c8e1ff",
         selection_fg = "#24292f",
-        ansi = { "#24292f", "#cf222e", "#1a7f37", "#9a6700", "#0969da", "#8250df", "#1b7c83", "#6e7781" },
-        brights = { "#57606a", "#a40e26", "#116329", "#7d5600", "#0550ae", "#6639ba", "#136061", "#8c959f" },
+        -- Colorblind-friendly: red→orange, green→blue
+        ansi = { "#24292f", "#dc6d09", "#0969da", "#b45309", "#0969da", "#8250df", "#1b7c83", "#6e7781" },
+        brights = { "#57606a", "#c45d10", "#0550ae", "#9a5000", "#0550ae", "#6639ba", "#136061", "#8c959f" },
     },
 
     -- Font

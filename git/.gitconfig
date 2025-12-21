@@ -75,20 +75,20 @@
     ui = auto
 
 [color "branch"]
-    current = green bold
-    local = green
-    remote = red bold
+    current = blue bold
+    local = blue
+    remote = yellow bold
 
 [color "diff"]
     meta = yellow bold
     frag = magenta bold
-    old = red bold
-    new = green bold
+    old = yellow bold
+    new = blue bold
 
 [color "status"]
-    added = green bold
+    added = blue bold
     changed = yellow bold
-    untracked = red
+    untracked = yellow
 
 [push]
     default = current
@@ -122,6 +122,11 @@
     whitespace-error-style = 22 reverse
     syntax-theme = GitHub
     light = true
+    # Colorblind-friendly: additions blue, deletions orange
+    plus-style = syntax "#ddf4ff"
+    plus-emph-style = syntax "#c8e1ff"
+    minus-style = syntax "#fce4c4"
+    minus-emph-style = syntax "#f8c896"
 
 [delta "unobtrusive-line-numbers"]
     line-numbers = true

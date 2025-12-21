@@ -20,12 +20,12 @@
         {
           "type": "git",
           "style": "plain",
-          "foreground": "#1a7f37",
+          "foreground": "#0969da",
           "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#9a6700{{ end }}",
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#cf222e{{ end }}",
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#b45309{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#dc6d09{{ end }}",
             "{{ if gt .Ahead 0 }}#0969da{{ end }}",
-            "{{ if gt .Behind 0 }}#cf222e{{ end }}"
+            "{{ if gt .Behind 0 }}#dc6d09{{ end }}"
           ],
           "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} *{{ end }}{{ if .Staging.Changed }} +{{ end }}",
           "properties": {
@@ -62,7 +62,7 @@
           "style": "plain",
           "foreground": "#24292f",
           "foreground_templates": [
-            "{{ if gt .Code 0 }}#cf222e{{ end }}"
+            "{{ if gt .Code 0 }}#dc6d09{{ end }}"
           ],
           "template": "{{ if gt .Code 0 }}\u2717{{ else }}\u276f{{ end }} "
         }

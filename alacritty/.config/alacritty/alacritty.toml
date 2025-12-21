@@ -36,11 +36,12 @@ cursor = "#24292f"
 text = "#24292f"
 background = "#c8e1ff"
 
+# Colorblind-friendly: red→orange, green→blue
 [colors.normal]
 black = "#24292f"
-red = "#cf222e"
-green = "#1a7f37"
-yellow = "#9a6700"
+red = "#dc6d09"
+green = "#0969da"
+yellow = "#b45309"
 blue = "#0969da"
 magenta = "#8250df"
 cyan = "#1b7c83"
@@ -48,9 +49,9 @@ white = "#6e7781"
 
 [colors.bright]
 black = "#57606a"
-red = "#a40e26"
-green = "#116329"
-yellow = "#7d5600"
+red = "#c45d10"
+green = "#0550ae"
+yellow = "#9a5000"
 blue = "#0550ae"
 magenta = "#6639ba"
 cyan = "#136061"
