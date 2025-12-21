@@ -1,0 +1,34 @@
+# Ghostty configuration
+# https://ghostty.org/docs/config
+
+# Font
+font-family = Maple Mono NF
+font-size = 15
+
+# Window
+window-padding-x = 4
+window-padding-y = 4
+window-save-state = never
+confirm-close-surface = false
+
+# Shell integration
+shell-integration = zsh
+
+# Theme (toggled by theme-toggle script, default: light)
+theme = github-light
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = true
+
+# Clipboard
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = false
+
+# Scrollback
+scrollback-limit = 50000
+
+# macOS specific
+macos-option-as-alt = true
+macos-titlebar-style = tabs

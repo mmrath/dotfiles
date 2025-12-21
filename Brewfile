@@ -1,54 +1,42 @@
-if OS.mac?
-    # taps
-    tap "homebrew/cask-fonts"
-    tap "jandedobbeleer/oh-my-posh"
+# Brewfile - macOS dependencies
+# Install with: brew bundle
 
-    brew "noti" # utility to display notifications from scripts
-    brew "trash" # rm, but put in the trash rather than completely delete
-    brew "oh-my-posh" # prompt theme engine
+# Taps
+tap "homebrew/cask-fonts"
+tap "jandedobbeleer/oh-my-posh"
 
-    # Applications
-    cask "kitty" # a better terminal emulator
+# Core
+brew "zsh"
+brew "git"
+brew "stow"
+brew "oh-my-posh"
 
-    brew "zsh" # install zsh from brew
-    brew "git" # Git version control (latest version)
+# Terminal multiplexer
+brew "zellij"
 
+# CLI tools
+brew "bat"                  # Better cat
+brew "eza"                  # Modern ls replacement
+brew "fd"                   # Find alternative
+brew "fzf"                  # Fuzzy finder
+brew "gh"                   # GitHub CLI
+brew "git-delta"            # Better git diff
+brew "gnupg"                # GPG
+brew "grep"                 # grep (latest)
+brew "htop"                 # Better top
+brew "jq"                   # JSON processor
+brew "mise"                 # Runtime version manager
+brew "neovim"               # Editor
+brew "ripgrep"              # Fast grep
+brew "shellcheck"           # Shell script linter
+brew "trash"                # Safe rm (moves to trash)
+brew "tree"                 # Directory tree
+brew "wget"                 # File downloader
 
-    # Fonts (Nerd Font versions include powerline glyphs)
-    cask "font-jetbrains-mono-nerd-font"
-    cask "font-caskaydia-mono-nerd-font"
-    cask "font-iosevka-nerd-font"
-    cask "font-fira-code-nerd-font"
-    cask "font-maple-mono-nf"
-    
-elsif OS.linux?
-    brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
-end
+# Applications
+cask "wezterm"              # Terminal emulator
+cask "ghostty"              # Terminal emulator
 
-
-# packages
-brew "bat" # better cat
-brew "cloc" # lines of code counter
-brew "git-delta" # a better git diff
-brew "entr" # file watcher / command runner
-brew "eza" # modern ls replacement (formerly exa)
-brew "fd" # find alternative
-brew "fzf" # Fuzzy file searcher, used in scripts and in vim
-brew "gh" # GitHub CLI
-brew "gnupg" # GPG
-brew "grep" # grep (latest)
-brew "highlight" # code syntax highlighting
-brew "htop" # a top alternative
-brew "jq" # work with JSON files in shell scripts
-brew "neofetch" # pretty system info
-brew "neovim" # A better vim
-brew "python" # python (latst)
-brew "ripgrep" # very fast file searcher
-brew "fnm" # Fast Node version manager
-brew "shellcheck" # diagnostics for shell sripts
-brew "tmux" # terminal multiplexer
-brew "tree" # pretty-print directory contents
-brew "wdiff" # word differences in text files
-brew "wget" # internet file retriever
-brew "z" # switch between most used directories
-
+# Fonts (Nerd Font versions)
+cask "font-maple-mono-nf"
+cask "font-jetbrains-mono-nerd-font"

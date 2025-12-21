@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Bootstrap script for dotfiles
+# Bootstrap script for dotfiles (macOS)
 # This sets up the minimal requirements to run `make all`
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES="$(dirname "$SCRIPT_DIR")"
 
 source "$SCRIPT_DIR/lib.sh"
+
+# Require macOS
+if ! is_macos; then
+    log_error "This dotfiles setup is for macOS only"
+    exit 1
+fi
 
 log_info "Bootstrapping dotfiles..."
 
@@ -17,11 +23,7 @@ if ! command_exists brew; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
     # Add Homebrew to PATH for this session
-    if is_macos; then
-        eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
-    else
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv 2>/dev/null || true)"
-    fi
+    eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 fi
 
 log_success "Homebrew installed"
@@ -41,14 +43,10 @@ fi
 # Set up zsh as default shell
 setup_shell() {
     local zsh_path
-    if is_macos; then
-        zsh_path="$(brew --prefix)/bin/zsh"
-    else
-        zsh_path="$(which zsh)"
-    fi
+    zsh_path="$(brew --prefix)/bin/zsh"
 
-    # Add to /etc/shells if not present (macOS)
-    if is_macos && ! grep -qxF "$zsh_path" /etc/shells; then
+    # Add to /etc/shells if not present
+    if ! grep -qxF "$zsh_path" /etc/shells; then
         log_info "Adding $zsh_path to /etc/shells..."
         echo "$zsh_path" | sudo tee -a /etc/shells
     fi
@@ -66,6 +64,12 @@ log_success "Shell configured"
 # Create necessary directories
 ensure_dir "$HOME/.config"
 ensure_dir "$HOME/.local/bin"
+
+# Initialize default theme (light)
+if [[ ! -f "$HOME/.config/current-theme" ]]; then
+    echo "light" > "$HOME/.config/current-theme"
+    log_info "Set default theme to light"
+fi
 
 log_success "Bootstrap complete!"
 log_info "Run 'make all' to stow all packages"

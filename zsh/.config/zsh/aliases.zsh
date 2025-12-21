@@ -29,3 +29,13 @@ alias ga="git add"
 alias gc="git commit"
 alias gp="git push"
 alias gl="git pull"
+
+# Zellij (terminal multiplexer)
+alias zj="zellij"
+alias zja="zellij attach"
+alias zjl="zellij list-sessions"
+
+# Theme toggle
+alias dark="theme-toggle dark"
+alias light="theme-toggle light"
+alias theme="theme-toggle"

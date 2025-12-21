@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# theme-toggle - Switch between Catppuccin (dark) and GitHub Light themes
+# Usage: theme-toggle [dark|light|toggle|status]
+
+set -euo pipefail
+
+THEME_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/current-theme"
+
+# Ensure config directory exists
+mkdir -p "$(dirname "$THEME_FILE")"
+
+# Read current theme (default to light)
+current_theme() {
+    if [[ -f "$THEME_FILE" ]]; then
+        cat "$THEME_FILE"
+    else
+        echo "light"
+    fi
+}
+
+# Set new theme
+set_theme() {
+    local theme="$1"
+    echo "$theme" > "$THEME_FILE"
+
+    # Update Ghostty config if it exists
+    local ghostty_config="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config"
+    if [[ -f "$ghostty_config" ]]; then
+        if [[ "$theme" == "dark" ]]; then
+            sed -i '' 's/^theme = .*/theme = catppuccin-mocha/' "$ghostty_config"
+        else
+            sed -i '' 's/^theme = .*/theme = github-light/' "$ghostty_config"
+        fi
+    fi
+
+    # Signal running Neovim instances (if nvr is available)
+    if command -v nvr &>/dev/null; then
+        local colorscheme
+        if [[ "$theme" == "dark" ]]; then
+            colorscheme="catppuccin"
+        else
+            colorscheme="github_light"
+        fi
+        for sock in /tmp/nvim*/0 2>/dev/null; do
+            nvr --nostart --servername "$sock" \
+                -c "lua vim.g.theme_mode = '$theme'; pcall(vim.cmd, 'colorscheme $colorscheme')" 2>/dev/null || true
+        done
+    fi
+
+    # WezTerm auto-detects changes to the theme file
+
+    echo "Theme set to: $theme"
+    echo "Restart your shell or terminals for full effect."
+}
+
+# Main logic
+case "${1:-toggle}" in
+    dark)
+        set_theme "dark"
+        ;;
+    light)
+        set_theme "light"
+        ;;
+    toggle)
+        if [[ "$(current_theme)" == "dark" ]]; then
+            set_theme "light"
+        else
+            set_theme "dark"
+        fi
+        ;;
+    status)
+        echo "Current theme: $(current_theme)"
+        ;;
+    *)
+        echo "Usage: $(basename "$0") [dark|light|toggle|status]"
+        echo ""
+        echo "Commands:"
+        echo "  dark    - Switch to Catppuccin dark theme"
+        echo "  light   - Switch to GitHub Light theme"
+        echo "  toggle  - Toggle between themes (default)"
+        echo "  status  - Show current theme"
+        exit 1
+        ;;
+esac

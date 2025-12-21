@@ -27,13 +27,9 @@ log_error() {
     printf "${RED}[ERROR]${NC} %s\n" "$1" >&2
 }
 
-# Platform detection
+# Platform detection (macOS only)
 is_macos() {
     [[ "$(uname)" == "Darwin" ]]
-}
-
-is_linux() {
-    [[ "$(uname)" == "Linux" ]]
 }
 
 # Command availability check

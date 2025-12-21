@@ -152,7 +152,21 @@ require('lazy').setup({
     end,
   },
 
-  -- Soft light color scheme (colorblind-friendly: red→orange, green→blue)
+  -- Catppuccin theme (for dark mode)
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        flavour = 'mocha',
+        transparent_background = false,
+        term_colors = true,
+      }
+    end,
+  },
+
+  -- GitHub Light theme (for light mode, colorblind-friendly)
   {
     'projekt0n/github-nvim-theme',
     priority = 1000,
@@ -185,7 +199,6 @@ require('lazy').setup({
           },
         },
       }
-      vim.cmd.colorscheme 'github_light'
     end,
   },
 
@@ -281,3 +294,23 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.fn.setpos('.', save_cursor)
   end,
 })
+
+-- [[ Theme Detection ]]
+-- Read theme from ~/.config/current-theme (default: light)
+local function get_theme()
+  local theme_file = vim.fn.expand('~/.config/current-theme')
+  local file = io.open(theme_file, 'r')
+  if file then
+    local theme = file:read('*l')
+    file:close()
+    return theme or 'light'
+  end
+  return 'light'
+end
+
+vim.g.theme_mode = get_theme()
+if vim.g.theme_mode == 'dark' then
+  vim.cmd.colorscheme 'catppuccin'
+else
+  vim.cmd.colorscheme 'github_light'
+end

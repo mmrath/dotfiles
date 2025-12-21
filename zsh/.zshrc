@@ -19,7 +19,7 @@ DISABLE_AUTO_TITLE="true"
 ZSH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
 # Source modular config files (order matters)
-for config in path plugins prompt aliases functions; do
+for config in path theme plugins prompt aliases functions; do
     [[ -f "$ZSH_CONFIG/$config.zsh" ]] && source "$ZSH_CONFIG/$config.zsh"
 done
 

@@ -1,0 +1,47 @@
+// Zellij configuration
+// https://zellij.dev/documentation/
+
+// Theme (default: GitHub Light)
+theme "github-light"
+
+// Scroll buffer
+scroll_buffer_size 50000
+
+// Mouse support
+mouse_mode true
+
+// Clipboard (macOS)
+copy_command "pbcopy"
+copy_clipboard "system"
+copy_on_select true
+
+// Pane styling
+pane_frames false
+rounded_corners true
+
+// Default layout
+default_layout "default"
+
+// Session persistence
+session_serialization true
+pane_viewport_serialization true
+scrollback_lines_to_serialize 1000
+
+// UI settings
+simplified_ui true
+default_mode "normal"
+
+// Status bar
+ui {
+    pane_frames {
+        hide_session_name false
+    }
+}
+
+// Using default keybindings (modal system)
+// Ctrl+p = Pane mode
+// Ctrl+t = Tab mode
+// Ctrl+n = Resize mode
+// Ctrl+s = Scroll mode
+// Ctrl+o = Session mode
+// Ctrl+g = Lock mode (pass all keys through)

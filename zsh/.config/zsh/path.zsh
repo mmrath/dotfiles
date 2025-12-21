@@ -21,7 +21,4 @@ elif [[ -d "/usr/local/bin" ]]; then
     path=("/usr/local/bin" $path)
 fi
 
-# Linuxbrew
-[[ -d "/home/linuxbrew/.linuxbrew/bin" ]] && path=("/home/linuxbrew/.linuxbrew/bin" $path)
-
 export PATH

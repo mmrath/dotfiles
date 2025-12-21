@@ -16,7 +16,7 @@ ADOPT := $(STOW) --adopt --restow
 
 # Package groups
 CORE_PACKAGES := zsh git bin mise
-TERMINAL_PACKAGES := wezterm alacritty tmux
+TERMINAL_PACKAGES := wezterm ghostty zellij
 EDITOR_PACKAGES := nvim jetbrains
 TOOL_PACKAGES := ripgrep
 ALL_PACKAGES := $(CORE_PACKAGES) $(TERMINAL_PACKAGES) $(EDITOR_PACKAGES) $(TOOL_PACKAGES)
@@ -70,13 +70,13 @@ wezterm:
 	@echo "Stowing wezterm..."
 	@$(RESTOW) wezterm
 
-alacritty:
-	@echo "Stowing alacritty..."
-	@$(RESTOW) alacritty
+ghostty:
+	@echo "Stowing ghostty..."
+	@$(RESTOW) ghostty
 
-tmux:
-	@echo "Stowing tmux..."
-	@$(RESTOW) tmux
+zellij:
+	@echo "Stowing zellij..."
+	@$(RESTOW) zellij
 
 nvim:
 	@echo "Stowing nvim..."
@@ -128,13 +128,13 @@ help:
 	@echo "Package Groups:"
 	@echo "  all        - Stow all packages"
 	@echo "  core       - Stow core: zsh, git, bin, mise"
-	@echo "  terminals  - Stow terminals: wezterm, alacritty, tmux"
+	@echo "  terminals  - Stow terminals: wezterm, ghostty, zellij"
 	@echo "  editors    - Stow editors: nvim, jetbrains"
 	@echo "  tools      - Stow tools: ripgrep"
 	@echo ""
 	@echo "Individual Packages:"
-	@echo "  zsh, git, bin, mise, wezterm, alacritty,"
-	@echo "  tmux, nvim, jetbrains, ripgrep"
+	@echo "  zsh, git, bin, mise, wezterm, ghostty,"
+	@echo "  zellij, nvim, jetbrains, ripgrep"
 	@echo ""
 	@echo "Other:"
 	@echo "  unstow     - Remove all symlinks"
