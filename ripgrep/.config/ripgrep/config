@@ -1,0 +1,17 @@
+# Ripgrep configuration
+# Set RIPGREP_CONFIG_PATH to point to this file
+
+# Smart case search
+--smart-case
+
+# Follow symlinks
+--follow
+
+# Custom type definitions
+--type-add=tsx:*.tsx
+--type-add=jsx:*.jsx
+--type-add=style:*.{css,sass,less,scss}
+--type-add=tmpl:*.{html,hbs,pug}
+--type-add=test:*.{spec,test}.{ts,tsx,js,jsx}
+--type-add=stories:*.stories.{ts,tsx,js,jsx}
+--type-add=gql:*.{graphql,gql}

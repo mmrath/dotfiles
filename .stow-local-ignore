@@ -1,0 +1,26 @@
+# Stow ignore patterns
+# These files/directories will not be symlinked
+
+# Documentation
+README.*
+LICENSE
+CHANGELOG.*
+
+# Git
+\.git
+\.gitignore
+\.gitmodules
+
+# Development
+\.editorconfig
+Makefile
+Brewfile.*
+
+# Scripts (not stowed, run directly)
+^scripts$
+
+# Themes directory (referenced by path, not stowed)
+^themes$
+
+# Example/template files (copy manually)
+.*\.example$

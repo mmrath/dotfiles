@@ -1,0 +1,24 @@
+# Local git configuration
+# Copy this to ~/.gitconfig.local and fill in your details
+
+[user]
+    name = Your Name
+    email = your.email@example.com
+
+# Optional: GPG signing
+# [user]
+#     signingkey = YOUR_GPG_KEY_ID
+# [commit]
+#     gpgsign = true
+
+# Optional: Credential helper (platform-specific)
+# macOS:
+# [credential]
+#     helper = osxkeychain
+# Linux:
+# [credential]
+#     helper = cache --timeout=3600
+
+# Optional: Work-specific settings
+# [url "git@github.com:work-org/"]
+#     insteadOf = https://github.com/work-org/

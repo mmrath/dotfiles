@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Kill the process listening on a given port
+# Usage: killport <port>
+
+if [[ $# -eq 0 ]]; then
+    echo "Usage: killport <port>" >&2
+    exit 1
+fi
+
+port="$1"
+
+pid=$(wtfport "$port")
+
+if [[ -z "$pid" ]]; then
+    exit 0
+fi
+
+echo "Killing process $pid on port $port..."
+kill -9 "$pid"
+echo "Done."

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Show what process is listening on a given port
+# Usage: wtfport <port>
+
+if [[ $# -eq 0 ]]; then
+    echo "Usage: wtfport <port>" >&2
+    exit 1
+fi
+
+port="$1"
+
+# Find process listening on port
+line="$(lsof -i -P -n 2>/dev/null | grep LISTEN | grep ":${port} " || true)"
+
+if [[ -z "$line" ]]; then
+    echo "No process listening on port $port" >&2
+    exit 0
+fi
+
+pid=$(echo "$line" | awk '{print $2}')
+pid_name=$(echo "$line" | awk '{print $1}')
+
+# Output process name to stderr (won't be piped)
+echo >&2 "$pid_name (PID: $pid)"
+
+# Output just the PID (can be piped to other commands)
+echo "$pid"

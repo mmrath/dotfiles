@@ -1,0 +1,15 @@
+# local.zsh - Machine-specific configuration
+# Copy this to ~/.config/zsh/local.zsh and customize
+
+# Example: Additional PATH entries
+# path+=("$HOME/work/bin")
+
+# Example: Work-specific aliases
+# alias vpn="networksetup -connectpppoeservice 'Work VPN'"
+
+# Example: Company proxy
+# export HTTP_PROXY="http://proxy.company.com:8080"
+# export HTTPS_PROXY="http://proxy.company.com:8080"
+
+# Example: Local environment variables
+# export MY_SECRET_KEY="..."

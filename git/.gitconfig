@@ -1,0 +1,157 @@
+[init]
+    defaultBranch = main
+
+[include]
+    # Local gitconfig for user.name, user.email, and machine-specific settings
+    # This file is not tracked in git
+    path = ~/.gitconfig.local
+
+[alias]
+    # List all aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+
+    # Common shortcuts
+    co = checkout
+    cob = checkout -b
+    s = status --short --branch
+    ss = status
+    br = branch -v
+    d = "!git diff --ignore-space-at-eol -b -w --ignore-blank-lines -- ':!**/package-lock.json' ':!**/yarn.lock'"
+
+    # Commit shortcuts
+    cnv = commit --no-verify
+    pnv = push --no-verify
+    cane = commit --amend --no-edit
+    poh = push -u origin head
+    empty = commit --allow-empty
+    undo = reset --soft HEAD~1
+    amend = commit -a --amend
+
+    # Log
+    l = log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    day = "!sh -c 'git log --reverse --no-merges --branches=* --date=local --after=\"yesterday 11:59PM\" --author=\"`git config --get user.name`\"'"
+
+    # Branch management
+    cbr = rev-parse --abbrev-ref HEAD
+    recent = "!git for-each-ref --sort='-committerdate' --format='%(color:red)%(refname)%(color:reset)%09%(committerdate)' refs/heads | sed -e 's-refs/heads/--' | less -XFR"
+    forget = "!git fetch -p origin && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+    delete-merged-branches = "!f() { git checkout --quiet main && git branch --merged | grep --invert-match '\\*' | xargs -n 1 git branch --delete; git checkout --quiet @{-1}; }; f"
+
+    # Rebase
+    cont = rebase --continue
+    conf = "!git s | grep ^U"
+    update = !git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`
+
+    # Worktree
+    wa = worktree add
+    wrm = worktree remove
+
+    # Tags
+    lt = describe --tags --abbrev=0
+
+    # GitHub CLI integration
+    browse = "!gh repo view --web"
+
+    # Stats
+    count = shortlog -sn
+    review = "!git log --no-merges --pretty=%an | head -n 100 | sort | uniq -c | sort -nr"
+    churn = "!f() { git log --all -M -C --name-only --format='format:' \"$@\" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print \"count\tfile\"} {print $1 \"\t\" $2}' | sort -g; }; f"
+
+    # Cleanup
+    cleanup = "!git remote prune origin && git gc && git clean -df && git stash clear"
+
+    # Submodules
+    sub = "!git submodule sync && git submodule update"
+
+    # Assume unchanged
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+
+    # Remotes
+    remotes = remote -v
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = green bold
+    local = green
+    remote = red bold
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    untracked = red
+
+[push]
+    default = current
+
+[branch]
+    autosetuprebase = always
+
+[pull]
+    rebase = true
+
+[diff]
+    renames = copies
+    mnemonicprefix = true
+    compactionHeuristic = true
+
+[difftool]
+    prompt = false
+
+[apply]
+    whitespace = nowarn
+
+[core]
+    excludesfile = ~/.gitignore_global
+    pager = delta
+    editor = nvim
+    whitespace = cr-at-eol
+    autocrlf = input
+
+[delta]
+    features = unobtrusive-line-numbers decorations
+    whitespace-error-style = 22 reverse
+    syntax-theme = GitHub
+    light = true
+
+[delta "unobtrusive-line-numbers"]
+    line-numbers = true
+    line-numbers-left-format = "{nm:>4}|"
+    line-numbers-right-format = "{np:>4}|"
+    line-numbers-left-style = "#57606a"
+    line-numbers-right-style = "#57606a"
+
+[delta "decorations"]
+    commit-decoration-style = bold "#0969da" box ul
+    file-style = bold "#0969da" ul
+    file-decoration-style = none
+    hunk-header-decoration-style = "#0969da" box
+
+[interactive]
+    diffFilter = delta --color-only
+
+[rerere]
+    enabled = true
+
+[grep]
+    extendRegexp = true
+    lineNumber = true
+
+[rebase]
+    instructionFormat = "[%an - %ar] %s"
+    autoStash = true
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
