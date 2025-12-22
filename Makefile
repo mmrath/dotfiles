@@ -14,7 +14,7 @@ UNSTOW := $(STOW) --delete
 ADOPT := $(STOW) --adopt --restow
 
 # Package groups
-CORE_PACKAGES := zsh git bin mise
+CORE_PACKAGES := zsh git bin
 TERMINAL_PACKAGES := wezterm ghostty zellij
 EDITOR_PACKAGES := nvim jetbrains
 TOOL_PACKAGES := ripgrep
@@ -87,10 +87,6 @@ bin:
 	@echo "Stowing bin..."
 	@$(RESTOW) bin
 
-mise:
-	@echo "Stowing mise..."
-	@$(RESTOW) mise
-
 wezterm:
 	@echo "Stowing wezterm..."
 	@$(RESTOW) wezterm
@@ -158,13 +154,13 @@ help:
 	@echo "  unstow     - Remove all symlinks"
 	@echo ""
 	@echo "Package Groups:"
-	@echo "  core       - Stow core: zsh, git, bin, mise"
+	@echo "  core       - Stow core: zsh, git, bin"
 	@echo "  terminals  - Stow terminals: wezterm, ghostty, zellij"
 	@echo "  editors    - Stow editors: nvim, jetbrains"
 	@echo "  tools      - Stow tools: ripgrep"
 	@echo ""
 	@echo "Individual Packages:"
-	@echo "  zsh, git, bin, mise, wezterm, ghostty,"
+	@echo "  zsh, git, bin, wezterm, ghostty,"
 	@echo "  zellij, nvim, jetbrains, ripgrep"
 	@echo ""
 	@echo "Setup:"

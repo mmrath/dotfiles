@@ -8,7 +8,7 @@ macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
 - **Terminals**: WezTerm, Ghostty
 - **Multiplexer**: Zellij
 - **Editors**: Neovim (LSP, Telescope, Treesitter), JetBrains IdeaVim
-- **Theme**: GitHub Light (default) / Catppuccin dark with toggle
+- **Theme**: Catppuccin Frappe (default) / Latte light with toggle
 
 ## Quick Start
 
@@ -62,18 +62,16 @@ make help         # Show all available targets
 
 ## Theme Toggle
 
-Switch between GitHub Light and Catppuccin dark themes:
+Switch between Catppuccin Frappe (dark) and Latte (light) themes:
 
 ```bash
-light             # Switch to GitHub Light (default)
-dark              # Switch to Catppuccin dark
+dark              # Switch to Catppuccin Frappe (default)
+light             # Switch to Catppuccin Latte
 theme-toggle      # Toggle between themes
-theme status      # Show current theme
+theme-toggle status  # Show current theme
 ```
 
-**Affects**: WezTerm, Ghostty, Neovim, oh-my-posh prompt
-
-**Note**: The light theme uses colorblind-friendly colors (orange for errors/deletions, blue for success/additions).
+**Affects**: WezTerm, Ghostty, Neovim, Zellij, oh-my-posh prompt
 
 ## Zellij (Terminal Multiplexer)
 
@@ -98,7 +96,6 @@ dotfiles/
 ├── git/          # Git configuration
 ├── ghostty/      # Ghostty terminal
 ├── jetbrains/    # IdeaVim for JetBrains IDEs
-├── mise/         # Runtime version manager
 ├── nvim/         # Neovim configuration
 ├── ripgrep/      # Ripgrep config
 ├── scripts/      # Bootstrap & setup scripts
@@ -123,8 +120,8 @@ These files are not tracked in git:
 
 | Theme | Description |
 |-------|-------------|
-| **GitHub Light** | Soft cream background (#f5f5f0), colorblind-friendly (orange for errors, blue for success) |
-| **Catppuccin Mocha** | Deep purple background (#1e1e2e), warm accent colors |
+| **Catppuccin Frappe** | Medium dark (#303446), balanced contrast |
+| **Catppuccin Latte** | Light theme (#eff1f5), easy on the eyes |
 
 ## Bin Scripts
 
