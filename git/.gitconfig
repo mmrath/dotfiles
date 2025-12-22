@@ -160,6 +160,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[user]
-	name = Murali Rath
-	email = murali@mmrath.com
+
+# User details should be in ~/.gitconfig.local (not tracked)
+# See .gitconfig.local.example for template
