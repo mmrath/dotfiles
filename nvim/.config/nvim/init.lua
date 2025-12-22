@@ -54,91 +54,6 @@ require('lazy').setup({
     end,
   },
 
-  -- LSP Configuration
-  {
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-    },
-    config = function()
-      require('mason').setup()
-      require('mason-lspconfig').setup {
-        ensure_installed = { 'lua_ls', 'ts_ls', 'pyright' },
-      }
-
-      -- LSP keymaps (set when LSP attaches)
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(event)
-          local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
-          end
-          map('gd', vim.lsp.buf.definition, 'Go to definition')
-          map('gr', vim.lsp.buf.references, 'Go to references')
-          map('K', vim.lsp.buf.hover, 'Hover documentation')
-          map('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
-          map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
-        end,
-      })
-
-      -- Configure LSP servers
-      local lspconfig = require 'lspconfig'
-      lspconfig.lua_ls.setup {
-        settings = {
-          Lua = {
-            diagnostics = { globals = { 'vim' } },
-          },
-        },
-      }
-      lspconfig.ts_ls.setup {}
-      lspconfig.pyright.setup {}
-    end,
-  },
-
-  -- Autocompletion
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-    },
-    config = function()
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
-      cmp.setup {
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert {
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete {},
-          ['<CR>'] = cmp.mapping.confirm { select = true },
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        },
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'buffer' },
-          { name = 'path' },
-        },
-      }
-    end,
-  },
-
   -- Treesitter (better syntax highlighting)
   {
     'nvim-treesitter/nvim-treesitter',
@@ -268,12 +183,6 @@ vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left window' })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to upper window' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right window' })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic list' })
 
 -- Quick save
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save file' })
