@@ -24,7 +24,6 @@ repos=(
     # Oh-my-zsh utilities
     ohmyzsh/ohmyzsh/lib/clipboard.zsh
     ohmyzsh/ohmyzsh/plugins/colored-man-pages
-    ohmyzsh/ohmyzsh/plugins/magic-enter
 
     # Completions
     zsh-users/zsh-completions
