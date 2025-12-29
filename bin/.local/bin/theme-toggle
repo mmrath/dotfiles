@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# theme-toggle - Switch between Catppuccin (dark) and GitHub Light themes
+# theme-toggle - Switch between Catppuccin Frappe (dark) and Catppuccin Latte (light) themes
 # Usage: theme-toggle [dark|light|toggle|status]
 
 set -euo pipefail
@@ -77,7 +77,7 @@ case "${1:-toggle}" in
         echo ""
         echo "Commands:"
         echo "  dark    - Switch to Catppuccin dark theme"
-        echo "  light   - Switch to GitHub Light theme"
+        echo "  light   - Switch to Catppuccin Latte theme"
         echo "  toggle  - Toggle between themes (default)"
         echo "  status  - Show current theme"
         exit 1

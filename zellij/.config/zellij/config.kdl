@@ -1,8 +1,8 @@
 // Zellij configuration
 // https://zellij.dev/documentation/
 
-// Use built-in Catppuccin Frappe theme
-theme "catppuccin-frappe"
+// Use built-in Catppuccin Latte theme
+theme "catppuccin-latte"
 
 // Scroll buffer
 scroll_buffer_size 50000
