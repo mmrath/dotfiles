@@ -15,13 +15,13 @@ ADOPT := $(STOW) --adopt --restow
 
 # Package groups
 CORE_PACKAGES := zsh git bin
-TERMINAL_PACKAGES := wezterm ghostty zellij
+TERMINAL_PACKAGES := wezterm ghostty zellij kitty
 EDITOR_PACKAGES := nvim jetbrains
 TOOL_PACKAGES := ripgrep
 ALL_PACKAGES := $(CORE_PACKAGES) $(TERMINAL_PACKAGES) $(EDITOR_PACKAGES) $(TOOL_PACKAGES)
 
 .PHONY: all install stow core terminals editors tools help
-.PHONY: $(ALL_PACKAGES)
+.PHONY: $(ALL_PACKAGES) kitty
 .PHONY: unstow clean bootstrap ensure-brew ensure-stow update
 
 # Ensure Homebrew is installed
@@ -57,8 +57,26 @@ update: ensure-brew
 all: install stow
 	@echo "All done! Dependencies installed and configs stowed."
 
+# Remove non-symlink files that would conflict with stow
+# First unstow to remove symlinks, then delete any remaining regular files
+clean-conflicts:
+	@for pkg in $(ALL_PACKAGES); do \
+		$(UNSTOW) $$pkg 2>/dev/null || true; \
+	done
+	@for pkg in $(ALL_PACKAGES); do \
+		if [ -d "$(DOTFILES)/$$pkg" ]; then \
+			cd "$(DOTFILES)/$$pkg" && find . -type f | while read f; do \
+				target="$(HOME)/$${f#./}"; \
+				if [ -e "$$target" ] && [ ! -L "$$target" ]; then \
+					echo "Removing conflicting file: $$target"; \
+					rm -f "$$target"; \
+				fi; \
+			done; \
+		fi; \
+	done
+
 # Stow all packages (without installing deps)
-stow: ensure-stow core terminals editors tools
+stow: ensure-stow clean-conflicts core terminals editors tools
 	@echo "All packages stowed successfully!"
 
 # Package groups
@@ -98,6 +116,10 @@ ghostty:
 zellij:
 	@echo "Stowing zellij..."
 	@$(RESTOW) zellij
+
+kitty:
+	@echo "Stowing kitty..."
+	@$(RESTOW) kitty
 
 nvim:
 	@echo "Stowing nvim..."

@@ -2,6 +2,13 @@
 -- https://wezfurlong.org/wezterm/
 
 local wezterm = require("wezterm")
+local mux = wezterm.mux
+
+-- Maximize window on startup (respects dock and menu bar)
+wezterm.on("gui-startup", function(cmd)
+    local tab, pane, window = mux.spawn_window(cmd or {})
+    window:gui_window():maximize()
+end)
 
 -- Theme file location
 local theme_file = os.getenv("HOME") .. "/.config/current-theme"
@@ -72,7 +79,17 @@ end)
 
 return {
     -- Colors (theme-aware)
-    colors = colors,
+    colors = {
+        foreground = colors.foreground,
+        background = colors.background,
+        cursor_bg = colors.cursor_bg,
+        cursor_fg = colors.cursor_fg,
+        selection_bg = colors.selection_bg,
+        selection_fg = colors.selection_fg,
+        ansi = colors.ansi,
+        brights = colors.brights,
+        scrollbar_thumb = current_theme == "light" and "#9ca0b0" or "#737994",
+    },
 
     -- Font
     font = wezterm.font_with_fallback({
@@ -89,7 +106,7 @@ return {
     -- Window
     initial_rows = 30,
     initial_cols = 120,
-    window_padding = { left = 4, right = 4, top = 4, bottom = 4 },
+    window_padding = { left = 30, right = 20, top = 15, bottom = 15 },
     window_background_opacity = 1.0,
     window_close_confirmation = "NeverPrompt",
     automatically_reload_config = true,
@@ -100,7 +117,11 @@ return {
     -- Tab bar
     enable_tab_bar = true,
     hide_tab_bar_if_only_one_tab = false,
-    use_fancy_tab_bar = false,
+    use_fancy_tab_bar = true,
+    window_frame = {
+        font = wezterm.font("Maple Mono NF"),
+        font_size = 14.0,
+    },
     tab_max_width = 25,
     show_tab_index_in_tab_bar = false,
     switch_to_last_active_tab_when_closing_tab = true,

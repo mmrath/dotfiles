@@ -26,7 +26,8 @@ done
 # Source local overrides (machine-specific, not in git)
 [[ -f "$ZSH_CONFIG/local.zsh" ]] && source "$ZSH_CONFIG/local.zsh"
 
-# Mise (version manager) - must be last to properly hook into shell
+# Mise (version manager) - activates per-project when .mise.toml or .tool-versions exists
 if command -v mise &>/dev/null; then
     eval "$(mise activate zsh)"
 fi
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
