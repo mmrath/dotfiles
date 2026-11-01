@@ -1,172 +1,78 @@
 # Dotfiles
 
-macOS dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/)
+macOS dotfiles managed with [chezmoi](https://www.chezmoi.io/) and [Homebrew](https://brew.sh/).
 
-## What's Included
+- **Terminal**: Ghostty, Maple Mono NF
+- **Editor**: Neovim with [LazyVim](https://www.lazyvim.org/)
+- **Shell**: zsh with oh-my-posh, autosuggestions, syntax highlighting, fzf
+- **Theme**: Catppuccin, following macOS appearance (Latte when light, Frappe when dark)
 
-- **Shell**: Zsh with oh-my-posh prompt
-- **Terminals**: WezTerm, Ghostty
-- **Multiplexer**: Zellij
-- **Editors**: Neovim (LSP, Telescope, Treesitter), JetBrains IdeaVim
-- **Theme**: Catppuccin Frappe (default) / Latte light with toggle
-
-## Quick Start
+## New machine
 
 ```bash
-git clone https://github.com/murali/dotfiles ~/dotfiles
-cd ~/dotfiles
-make all          # Install deps + stow configs
+git clone git@github.com:mmrath/dotfiles.git ~/dotfiles
+~/dotfiles/install.sh
 ```
 
-## Installation
+`install.sh` installs Homebrew and chezmoi, then runs `chezmoi init --apply`. On the first run
+chezmoi asks for your git name and email; they are written to `~/.gitconfig.local` only if it
+doesn't exist yet.
 
-### Prerequisites
-
-- macOS 12+
-
-### Fresh Install
+Optional macOS defaults (key repeat, Finder, etc.):
 
 ```bash
-make all          # Install dependencies + stow all configs
+~/dotfiles/macos-defaults.sh
 ```
 
-Or step by step:
-```bash
-make install      # Install dependencies from Brewfile
-make stow         # Symlink all configurations
-```
+## Daily use
 
-### Updating
+| Task | Command |
+| --- | --- |
+| Preview what would change | `chezmoi diff` |
+| Apply the repo to `$HOME` | `chezmoi apply` |
+| Edit a managed file | `chezmoi edit ~/.zshrc` (or edit under `home/` and `chezmoi apply`) |
+| Pull in a change made directly in `$HOME` | `chezmoi re-add` |
+| Pull the repo and apply | `chezmoi update` |
+| Jump to the repo | `chezmoi cd` |
 
-```bash
-make update       # Update all Homebrew dependencies
-make stow         # Re-stow configs (if needed)
-```
-
-### Individual Packages
-
-```bash
-make zsh          # Shell configuration
-make wezterm      # WezTerm terminal
-make ghostty      # Ghostty terminal
-make zellij       # Zellij multiplexer
-make nvim         # Neovim editor
-make git          # Git configuration
-```
-
-### All Make Targets
-
-```bash
-make help         # Show all available targets
-```
-
-## Theme Toggle
-
-Switch between Catppuccin Frappe (dark) and Latte (light) themes:
-
-```bash
-dark              # Switch to Catppuccin Frappe (default)
-light             # Switch to Catppuccin Latte
-theme-toggle      # Toggle between themes
-theme-toggle status  # Show current theme
-```
-
-**Affects**: WezTerm, Ghostty, Neovim, Zellij, oh-my-posh prompt
-
-## Zellij (Terminal Multiplexer)
-
-Uses default keybindings (modal system). Press the key combo to enter a mode, then use the actions:
-
-| Mode | Enter | Common Keys |
-|------|-------|-------------|
-| Pane | `Ctrl+p` | `d` split down, `r` split right, `x` close, `hjkl` navigate |
-| Tab | `Ctrl+t` | `n` new, `x` close, `r` rename, `1-9` goto |
-| Resize | `Ctrl+n` | `hjkl` resize |
-| Scroll | `Ctrl+s` | `jk` scroll, `/` search |
-| Session | `Ctrl+o` | `d` detach, `w` session manager |
-| Lock | `Ctrl+g` | Pass all keys to terminal |
-
-The status bar shows available keys in each mode.
-
-## Directory Structure
+## Layout
 
 ```
-dotfiles/
-├── bin/          # Custom scripts (~/.local/bin)
-├── git/          # Git configuration
-├── ghostty/      # Ghostty terminal
-├── jetbrains/    # IdeaVim for JetBrains IDEs
-├── nvim/         # Neovim configuration
-├── ripgrep/      # Ripgrep config
-├── scripts/      # Bootstrap & setup scripts
-├── themes/       # Prompt themes (oh-my-posh)
-├── wezterm/      # WezTerm terminal
-├── zellij/       # Zellij multiplexer
-├── zsh/          # Zsh shell configuration
-├── Brewfile      # Homebrew dependencies
-└── Makefile      # Installation targets
+.chezmoiroot           -> "home": chezmoi source state lives in home/
+home/                  files mapped to $HOME (dot_zshrc -> ~/.zshrc, ...)
+home/.chezmoiscripts/  scripts run by chezmoi apply
+nvim/                  LazyVim config; ~/.config/nvim is a symlink to it
+Brewfile               Homebrew packages
+install.sh             bootstrap for a new machine
+macos-defaults.sh      opt-in macOS preferences
 ```
 
-## Customization
+### Packages
 
-### Local Overrides
+`Brewfile` is applied by `chezmoi apply` whenever its contents change
+(`run_onchange_before_10-brew-bundle.sh`). Add a package by editing `Brewfile` and running
+`chezmoi apply`. Packages are never uninstalled automatically; use
+`brew bundle cleanup --file=~/dotfiles/Brewfile` to see what isn't listed.
 
-These files are not tracked in git:
+### Neovim
 
-- `~/.config/zsh/local.zsh` - Machine-specific shell config
-- `~/.gitconfig-local` - Git user info (name, email, signing key)
+`~/.config/nvim` is a symlink into this repo, so `:Lazy update` writes `nvim/lazy-lock.json`
+directly here and shows up in `git status`. Commit it to pin plugin versions. When the lock file
+changes, `chezmoi apply` runs `Lazy! restore` so every machine runs the same plugin versions.
+Background update checks are disabled.
 
-### Theme Colors
+The colorscheme is `catppuccin-nvim` rather than `catppuccin`, because Neovim 0.12 ships a
+built-in `catppuccin` colorscheme that would otherwise shadow the plugin.
 
-| Theme | Description |
-|-------|-------------|
-| **Catppuccin Frappe** | Medium dark (#303446), balanced contrast |
-| **Catppuccin Latte** | Light theme (#eff1f5), easy on the eyes |
+### Theme
 
-## Bin Scripts
+Ghostty uses `theme = light:Catppuccin Latte,dark:Catppuccin Frappe`. Neovim detects the
+terminal background and picks the matching flavour. The prompt uses ANSI color names, so it
+follows the terminal palette. Nothing rewrites managed files when the theme changes.
 
-| Script | Purpose |
-|--------|---------|
-| `theme-toggle` | Switch dark/light theme |
-| `killport` | Kill process on port |
-| `wtfport` | Show what's using a port |
-| `git-bare-clone` | Clone as bare repo for worktrees |
-| `git-clc` | Copy last commit hash |
-| `git-kill` | Delete branch locally and remotely |
-| `jwt` | Decode JWT tokens |
-| `colortest` | Test terminal colors |
+### Machine-specific config
 
-## Neovim
+Kept out of the repo and loaded if present:
 
-Key bindings (Leader = Space):
-
-| Key | Action |
-|-----|--------|
-| `<leader>ff` | Find files |
-| `<leader>fg` | Live grep |
-| `<leader>fb` | Find buffers |
-| `<leader>fr` | Recent files |
-| `gd` | Go to definition |
-| `gr` | Go to references |
-| `K` | Hover documentation |
-| `<leader>rn` | Rename symbol |
-| `<leader>ca` | Code action |
-| `<leader>w` | Save file |
-
-## Syncing Changes
-
-```bash
-cd ~/dotfiles
-git pull
-make all          # Install any new deps + re-stow
-```
-
-## Uninstalling
-
-```bash
-make unstow      # Remove all symlinks
-```
-
-## License
-
-MIT
+- `~/.gitconfig.local` (git user, signing key, ...). Created once from the chezmoi prompts, never overwritten.
+- `~/.config/zsh/local.zsh` (extra PATH entries, aliases, secrets)

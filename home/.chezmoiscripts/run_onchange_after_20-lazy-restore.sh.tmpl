@@ -1,0 +1,6 @@
+#!/bin/bash
+# lazy-lock.json hash: {{ include "../nvim/lazy-lock.json" | sha256sum }}
+set -euo pipefail
+
+eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+nvim --headless "+Lazy! restore" +qa

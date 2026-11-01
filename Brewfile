@@ -1,42 +1,44 @@
-# Brewfile - macOS dependencies
-# Install with: brew bundle
+# Applied automatically by `chezmoi apply` whenever this file changes.
 
-# Taps
-tap "homebrew/cask-fonts"
 tap "jandedobbeleer/oh-my-posh"
 
 # Core
-brew "zsh"
+brew "chezmoi"
 brew "git"
-brew "stow"
 brew "oh-my-posh"
 
-# Terminal multiplexer
-brew "zellij"
+# Shell plugins
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-history-substring-search"
+brew "zsh-syntax-highlighting"
+
+# Neovim + LazyVim requirements
+brew "neovim"
+brew "fd"
+brew "fzf"
+brew "lazygit"
+brew "ripgrep"
+brew "tree-sitter-cli"
 
 # CLI tools
-brew "bat"                  # Better cat
-brew "eza"                  # Modern ls replacement
-brew "fd"                   # Find alternative
-brew "fzf"                  # Fuzzy finder
-brew "gh"                   # GitHub CLI
-brew "git-delta"            # Better git diff
-brew "gnupg"                # GPG
-brew "grep"                 # grep (latest)
-brew "htop"                 # Better top
-brew "jq"                   # JSON processor
-brew "mise"                 # Runtime version manager
-brew "neovim"               # Editor
-brew "ripgrep"              # Fast grep
-brew "shellcheck"           # Shell script linter
-brew "trash"                # Safe rm (moves to trash)
-brew "tree"                 # Directory tree
-brew "wget"                 # File downloader
+brew "bat"
+brew "eza"
+brew "gh"
+brew "git-delta"
+brew "gnupg"
+brew "grep"
+brew "htop"
+brew "jq"
+brew "mise"
+brew "shellcheck"
+brew "trash"
+brew "tree"
+brew "wget"
 
 # Applications
-cask "wezterm"              # Terminal emulator
-cask "ghostty"              # Terminal emulator
+cask "ghostty"
 
-# Fonts (Nerd Font versions)
+# Fonts
 cask "font-maple-mono-nf"
 cask "font-jetbrains-mono-nerd-font"
