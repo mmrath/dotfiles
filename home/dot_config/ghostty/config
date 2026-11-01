@@ -18,13 +18,14 @@ shell-integration = zsh
 theme = light:Catppuccin Latte,dark:Catppuccin Frappe
 
 # Cursor
-cursor-style = block
+cursor-style = bar
 cursor-style-blink = true
+adjust-cursor-thickness = 3
 
 # Clipboard
 clipboard-read = allow
 clipboard-write = allow
-copy-on-select = false
+copy-on-select = clipboard
 
 # Scrollback
 scrollback-limit = 50000
