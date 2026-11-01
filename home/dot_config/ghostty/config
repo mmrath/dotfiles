@@ -20,7 +20,7 @@ theme = light:Catppuccin Latte,dark:Catppuccin Frappe
 # Cursor
 cursor-style = bar
 cursor-style-blink = true
-adjust-cursor-thickness = 3
+adjust-cursor-thickness = 4
 
 # Clipboard
 clipboard-read = allow
